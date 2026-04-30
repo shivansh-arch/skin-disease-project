@@ -1,0 +1,66 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Skin Disease Classifier</title>
+    <!-- Use Google Fonts -->
+    <link href="https://fonts.googleapis.com/css2?family=Outfit:wght@300;400;600&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}">
+    <!-- Load FontAwesome for icons -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+</head>
+<body>
+    <div class="background-container">
+        <div class="blob blob-1"></div>
+        <div class="blob blob-2"></div>
+    </div>
+    
+    <div class="glass-panel">
+        <header>
+            <h1>Skin AI Diagnostics</h1>
+            <p>Upload images for precise, AI-driven dermatological predictions.</p>
+        </header>
+        
+        <form id="uploadForm" enctype="multipart/form-data">
+            <div class="upload-area" id="dropZone">
+                <i class="fa-solid fa-cloud-arrow-up"></i>
+                <p>Drag & drop skin images here or <span>browse</span></p>
+                <input type="file" id="fileInput" name="files[]" multiple accept="image/*" class="file-input">
+            </div>
+            
+            <div id="previewContainer" class="preview-container"></div>
+            
+            <button type="submit" id="analyzeBtn" class="analyze-btn" disabled>
+                <span class="btn-text">Analyze Images</span>
+                <i class="fa-solid fa-stethoscope"></i>
+            </button>
+        </form>
+
+        <div id="loadingIndicator" class="loading-indicator hidden">
+            <div class="spinner"></div>
+            <p>Analyzing morphology...</p>
+        </div>
+
+        <div id="resultContainer" class="result-container hidden">
+            <div class="result-card">
+                <div class="result-header">
+                    <h2><i class="fa-solid fa-clipboard-check"></i> Diagnosis Results</h2>
+                </div>
+                <div class="result-body">
+                    <p class="prediction-label" id="predictionText">Melanoma</p>
+                    <div class="confidence-wrapper">
+                        <span class="confidence-label">Confidence:</span>
+                        <div class="progress-bar-bg">
+                            <div class="progress-bar-fill" id="confidenceBar"></div>
+                        </div>
+                        <span class="confidence-value" id="confidenceText">98.5%</span>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script src="{{ url_for('static', filename='script.js') }}"></script>
+</body>
+</html>
