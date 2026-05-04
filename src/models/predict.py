@@ -26,9 +26,12 @@ def get_classes():
     return train_loader.dataset.classes
 
 
+device = torch.device("cuda" if torch.cuda.is_available() else "cpu")
+
 def load_model():
     model = get_model()
-    model.load_state_dict(torch.load(config.get("paths", "model_path")))
+    model.load_state_dict(torch.load(config.get("paths", "model_path"), map_location=device))
+    model.to(device)
     model.eval()
     return model
 
@@ -38,7 +41,7 @@ def predict(image_path):
     classes = get_classes()   # ✅ USE HERE
 
     image = Image.open(image_path).convert("RGB")
-    image = transform(image).unsqueeze(0)
+    image = transform(image).unsqueeze(0).to(device)
 
     with torch.no_grad():
         
@@ -58,7 +61,7 @@ def predict_multiple(image_paths):
 
     for path in image_paths:
         image = Image.open(path).convert("RGB")
-        image = transform(image).unsqueeze(0)
+        image = transform(image).unsqueeze(0).to(device)
 
         with torch.no_grad():
             outputs = model(image)
