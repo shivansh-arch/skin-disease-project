@@ -1,109 +1,278 @@
-# 🧴 Skin Disease Classification using Deep Learning
+# 🩺 Skin Disease Classification using Deep Learning
 
-> A scalable, deep learning-based web application for automated skin disease classification.
+> **An end-to-end AI-powered skin disease classification system built with PyTorch, EfficientNet-B0, Flask, and FastAPI.**
 
-## 📝 Project Overview
+This project leverages **transfer learning** with **EfficientNet-B0** to automatically classify skin diseases from clinical images. Alongside the trained deep learning model, the project provides both a **Flask web application** for end users and a **FastAPI REST API** for integration into other applications.
 
-Early and accurate detection of skin diseases is critical for effective treatment and patient care. This project presents a comprehensive deep learning-based system designed to classify skin lesions from digital images.
-
-Built using a **Convolutional Neural Network (EfficientNet-B0)** and a dual-backend architecture (Flask for the user interface, FastAPI for the REST API), the system offers robust, real-time predictions. To account for difficult lighting or blurry photos, the architecture includes a **Multi-Image Voting Logic** that processes multiple images of the same lesion simultaneously and aggregates the confidence scores to provide a highly accurate final prediction.
-
-### 🎯 Key Features
-* **Deep Feature Extraction:** Utilizes transfer learning with pre-trained ImageNet weights on EfficientNet-B0.
-* **Dual Backend System:** Features a user-friendly web interface (Flask) and a high-performance REST API (FastAPI).
-* **Multi-Image Voting Logic:** Upload multiple angles of the same skin lesion, and the system will average the confidence scores to provide the most reliable prediction.
-* **Automated Data Preprocessing:** Real-time image resizing (224x224) and tensor normalization.
+To improve prediction reliability, the system also supports **Multi-Image Voting**, allowing multiple photos of the same lesion to be analyzed together before producing a final prediction.
 
 ---
 
-## 📂 Dataset Categorization
+# 🚀 Features
 
-For this Minimum Viable Product (MVP), the model has been optimized and trained to classify **6 primary distinct classes** of skin conditions to ensure computational efficiency and high inference speed:
-
-1. **Lichen**
-2. **Lupus**
-3. **Moles** (Benign Tumors)
-4. **Psoriasis**
-5. **Rosacea**
-6. **Seborrheic Keratoses**
-
-*(Note: The architecture is fully scalable and can be trained on up to 22+ classes if additional GPU resources and full datasets are provided).*
-
----
-
-## ⚙️ Tech Stack
-
-* **Language:** Python 3.10+
-* **Deep Learning Framework:** PyTorch & Torchvision
-* **Web Frameworks:** Flask (UI), FastAPI (REST API)
-* **Image Processing:** PIL (Pillow), OpenCV
-* **Data Manipulation:** NumPy, Pandas
+* 🧠 EfficientNet-B0 based image classifier
+* 📷 Single-image prediction
+* 🖼️ Multi-image voting for improved robustness
+* 🌐 Flask web interface
+* ⚡ FastAPI REST API
+* 📊 Confidence score prediction
+* 🔄 Automated image preprocessing
+* 🧩 Modular training pipeline
+* 📁 Config-driven project structure
 
 ---
 
-## 🚀 How to Download and Run the Project
+# 🏗️ System Architecture
 
-Follow these steps to run the web application locally on your machine.
+```text
+Input Skin Image(s)
+        │
+        ▼
+Image Preprocessing
+(Resize • Normalize)
+        │
+        ▼
+EfficientNet-B0
+(Transfer Learning)
+        │
+        ▼
+Softmax Probabilities
+        │
+        ▼
+Multi-Image Voting
+(Optional)
+        │
+        ▼
+Final Disease Prediction
+        │
+        ▼
+Flask UI / FastAPI API
+```
 
-### 1. Clone the Repository
-Open your terminal and clone the repository:
+---
+
+# 📂 Project Structure
+
+```text
+skin-disease-project/
+
+├── app/
+│   ├── main.py
+│   ├── routes.py
+│   └── schemas.py
+│
+├── configs/
+│   └── config.yaml
+│
+├── models/
+│   └── trained_model.pt
+│
+├── src/
+│   ├── config/
+│   ├── data/
+│   ├── interface/
+│   ├── models/
+│   └── utils/
+│
+├── templates/
+├── static/
+├── flask_app.py
+├── requirements.txt
+└── README.md
+```
+
+---
+
+# 🧠 Model
+
+The classifier is built using **EfficientNet-B0**, a lightweight convolutional neural network that provides an excellent balance between accuracy and computational efficiency.
+
+The model is fine-tuned using transfer learning on a curated skin disease dataset.
+
+---
+
+# 📊 Supported Classes
+
+Current implementation predicts:
+
+* Lichen
+* Lupus
+* Moles (Benign)
+* Psoriasis
+* Rosacea
+* Seborrheic Keratosis
+
+The architecture can easily be extended to additional disease categories by retraining the model.
+
+---
+
+# 🛠️ Tech Stack
+
+### Machine Learning
+
+* PyTorch
+* Torchvision
+* EfficientNet-B0
+
+### Backend
+
+* FastAPI
+* Flask
+
+### Image Processing
+
+* Pillow
+* OpenCV
+* NumPy
+
+### Utilities
+
+* Pandas
+* YAML
+
+---
+
+# ⚙️ Installation
+
+Clone the repository
+
 ```bash
 git clone https://github.com/shivansh-arch/skin-disease-project.git
 cd skin-disease-project
 ```
 
-### 2. Set Up a Virtual Environment
-It is highly recommended to use a virtual environment to manage dependencies.
+Create a virtual environment
+
 ```bash
-# Create the virtual environment
 python -m venv venv
+```
 
-# Activate it (Windows)
+Activate it
+
+Windows
+
+```bash
 venv\Scripts\activate
+```
 
-# Activate it (Mac/Linux)
+Linux / macOS
+
+```bash
 source venv/bin/activate
 ```
 
-### 3. Install Dependencies
-Install all required Python packages from the requirements file:
+Install dependencies
+
 ```bash
 pip install -r requirements.txt
 ```
 
-### 4. Run the Web Interface (Flask)
-Start the user-friendly web application:
+---
+
+# ▶️ Run Flask Application
+
 ```bash
 python flask_app.py
 ```
-* Once the server starts, open your web browser and navigate to: **http://127.0.0.1:5000**
-* Click "Upload" to select an image (or multiple images) and get a real-time prediction!
 
-### 5. (Optional) Run the REST API (FastAPI)
-If you want to test the developer API endpoints:
-```bash
-uvicorn app.main:app --reload
+Open
+
+```text
+http://127.0.0.1:5000
 ```
-* Navigate to **http://127.0.0.1:8000/docs** to view the Swagger UI and test the API endpoints directly.
 
 ---
 
-## 📁 Directory Structure
+# ⚡ Run FastAPI
 
-```plaintext
-SkinDiseaseProject/
-│
-├── app/                  # FastAPI backend routes and logic
-├── configs/              # Configuration files (e.g., config.yaml)
-├── data/                 # Raw and processed image datasets
-├── models/               # Saved PyTorch models (.pt files)
-├── src/
-│   ├── data/             # Data preprocessing scripts
-│   ├── models/           # Model architecture, training, and evaluation scripts
-│   └── utils/            # Helper functions and loggers
-│
-├── templates/            # HTML files for the Flask frontend
-├── flask_app.py          # Main Flask web application
-├── requirements.txt      # Python dependencies
-└── Readme.md             # Project documentation
+```bash
+uvicorn app.main:app --reload
 ```
+
+Swagger documentation
+
+```text
+http://127.0.0.1:8000/docs
+```
+
+---
+
+# 🔄 Multi-Image Voting
+
+Instead of predicting from only one image, the system can process multiple images of the same lesion.
+
+Workflow:
+
+1. Upload multiple images
+2. Predict each image individually
+3. Average confidence scores
+4. Return the highest-confidence disease
+
+This approach improves robustness when images suffer from poor lighting, blur, or different viewing angles.
+
+---
+
+# 📸 Screenshots
+
+Add screenshots here.
+
+* Home Page
+* Upload Screen
+* Prediction Result
+* Multi-image Upload
+* API Swagger
+
+---
+
+# 📈 Future Improvements
+
+* Mobile application
+* Docker deployment
+* ONNX model export
+* Model quantization
+* Grad-CAM visualization
+* Explainable AI (XAI)
+* Additional disease categories
+* Cloud deployment
+* User authentication
+* Patient history management
+
+---
+
+# ⚠️ Limitations
+
+* Educational project
+* Predicts only supported disease classes
+* Does not replace professional medical diagnosis
+* Performance depends on image quality
+
+---
+
+# 🎯 Learning Outcomes
+
+This project demonstrates:
+
+* Deep Learning for Medical Imaging
+* Transfer Learning
+* CNN-based Image Classification
+* REST API Development
+* Flask Web Development
+* FastAPI Integration
+* Image Preprocessing
+* Model Deployment
+
+---
+
+# 👨‍💻 Author
+
+**Shivansh Gupta**
+
+Computer Science Student | Machine Learning & AI Enthusiast
+
+GitHub: https://github.com/shivansh-arch
+
+---
+
+# ⭐ Support
+
+If you found this project useful, consider giving it a ⭐ on GitHub.
